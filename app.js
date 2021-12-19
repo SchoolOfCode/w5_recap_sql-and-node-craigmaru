@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import path, { dirname } from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
+import {getAllCats, getCatsById, getCatsByName} from "./db/index.js"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -20,7 +21,7 @@ app.get("/", function (req, res, next) {
   res.render("index", { title: "Books" });
 });
 
-const cats = [
+export const cats = [
   {
     id: 1,
     name: "Tony",
@@ -49,5 +50,31 @@ Test this in your browser.
 - 👉 Go to main.js in the public/js folder, and write the code needed to hook up the button with id 
 "get-cats" to show the data on the front end.
 */
+
+// GET ALL CATS
+app.get('/cats', async function(req, res){
+  const data = await getAllCats();
+  res.json({success: true, payload: data});
+})
+
+// GET A CATS BY ID
+app.get('/cats/:id', async function(req, res){
+  const id = Number(req.params.id);
+  
+  const idReturned = await getCatsById(id)  
+
+  res.json({success: true, payload: idReturned});
+})
+
+//GET A CAT BY NAMED
+app.get('/cat/:name', async function (req, res) {
+  const name = req.query.name
+
+  const catName = getCatsByName(name)
+
+  console.log(name)
+
+  res.json({success:true, payload: catName})
+})
 
 export default app;
