@@ -1,4 +1,4 @@
-import {cats } from '..//app.js'
+import {cats } from '..//app.js';
 
 // GET ALL CATS
 export function getAllCats() {
@@ -21,5 +21,6 @@ export function getCatsByName(name) {
     })
     return foundName;
 }
+
 
 

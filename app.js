@@ -54,7 +54,13 @@ Test this in your browser.
 // GET ALL CATS
 app.get('/cats', async function(req, res){
   const data = await getAllCats();
-  res.json({success: true, payload: data});
+  const { name } = req.query
+
+  if (name){
+    const catName = await getCatsByName(name)
+    res.json({success:true, payload: catName})
+  }else {res.json({success: true, payload: data});}
+  
 })
 
 // GET A CATS BY ID
@@ -63,18 +69,12 @@ app.get('/cats/:id', async function(req, res){
   
   const idReturned = await getCatsById(id)  
 
+  // if(idReturned === undefined) {
+  //   res.send({ message: `Cat does not exist with id of ${req.params.id}`})
+  // }
+
   res.json({success: true, payload: idReturned});
 })
 
-//GET A CAT BY NAMED
-app.get('/cat/:name', async function (req, res) {
-  const name = req.query.name
-
-  const catName = getCatsByName(name)
-
-  console.log(name)
-
-  res.json({success:true, payload: catName})
-})
 
 export default app;
