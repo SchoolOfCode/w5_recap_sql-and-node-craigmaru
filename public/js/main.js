@@ -1,16 +1,16 @@
-const url = "/api";
+const url = "http://localhost:5000";
 
 const catsSection = document.querySelector("#cats");
 const getCatsButton = document.querySelector("#get-cats");
 const submitButton = document.querySelector("button[type='submit']");
 
-submitButton.addEventListener("click", handleSubmit);
+// submitButton.addEventListener("click", handleSubmit);
 getCatsButton.addEventListener("click", handleClick);
 
-function handleSubmit(event) {
-  event.preventDefault();
-  addCatInfo();
-}
+// function handleSubmit(event) {
+//   event.preventDefault();
+//   addCatInfo();
+// }
 
 async function addCatInfo() {
   console.log(gatherFormData());
@@ -41,8 +41,13 @@ function handleClick(event) {
 
 async function getCats() {
   const response = await fetch(`${url}/cats`);
+
+  if(!response.ok){
+    const message = `An error occurred: ${response.status}`;
+    console.log(message);
+  }
   const { payload } = await response.json();
-  recipesSection.innerHTML = "";
+
   console.log(payload);
   payload.forEach(renderCat);
 }
