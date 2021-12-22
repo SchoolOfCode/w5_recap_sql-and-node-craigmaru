@@ -40,7 +40,7 @@ function handleClick(event) {
 }
 
 async function getCats() {
-  const response = await fetch(`${url}/cats`);
+  const response = await fetch("/cats");
 
   if(!response.ok){
     const message = `An error occurred: ${response.status}`;
@@ -57,7 +57,7 @@ function renderCat(cat) {
   catsSection.appendChild(article);
 }
 
-function createCatArticle({ catName, humanName, hobby }) {
+function createCatArticle({catName, humanName, hobby }) {
   const article = document.createElement("article");
   const h2CatName = document.createElement("h2");
   h2CatName.innerText = `Cat name: ${catName}`;

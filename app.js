@@ -4,11 +4,13 @@ import path, { dirname } from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import {getAllCats, getCatsById, getCatsByName} from "./db/index.js"
+import cors from 'cors'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
+app.use(cors())
 
 app.use(logger("dev"));
 app.use(express.json());
